@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,9 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('organizer.events.create', compact('categories'));
+    
     }
 
     /**
@@ -37,7 +40,11 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $events= Event::create($request->all());
+        $events->addMediaFromRequest('image')->toMediaCollection('images');
+        return redirect()->route('allevents')->with('success', 'Event created successfuly');
+    
+        
     }
 
     /**
@@ -48,7 +55,9 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $events=Event::all();
+        return view('organizer.events.index',compact('events'));
+      
     }
 
     /**
@@ -59,7 +68,10 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        
+        $categories = Category::all();
+        return view('organizer.events.edit', compact(['categories','event']));
+    
     }
 
     /**
@@ -71,9 +83,16 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $event->update($request->except('image'));
+    
+        if ($request->hasFile('image')) {
+            $event->clearMediaCollection('images');
+            $event->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+    
+        return redirect()->route('allevents');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -84,4 +103,28 @@ class EventController extends Controller
     {
         //
     }
+    public function allevents()
+    {
+        $events=Event::all();
+        return view('organizer.events.index',compact('events'));
+      
+    }
+    public function updateStatusPublished(Request $request, Event $event)
+{
+    $event->update(['status_published' => !$event->status_published]);
+
+    return redirect()->route('allevents');
+}
+
+public function updateAutomaticAcceptance(Request $request, Event $event)
+{
+    $event->update(['automatic_acceptance' => !$event->automatic_acceptance]);
+    return redirect()->route('allevents');
+}
+public function updateStatus(Request $request, Event $event)
+{
+    $event->update(['status' => !$event->status]);
+    return redirect()->route('events.index');
+}
+
 }
