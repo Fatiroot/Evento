@@ -34,18 +34,33 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'image'=>['required'],
+            'role' => ['required', 'in:1,2'],            
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            
         ]);
 
-        event(new Registered($user));
+           
+        $user->addMediaFromRequest('image')->toMediaCollection('images');
+        if ($request->role == 1) {
+            $user->roles()->attach(2);
+            event(new Registered($user));
+            Auth::login($user); 
+            return redirect(RouteServiceProvider::HOME);
 
-        Auth::login($user);
+        }else{
+            $user->roles()->attach(3); 
+            event(new Registered($user));
+            Auth::login($user);
+            
+            return redirect(RouteServiceProvider::HOME);
+           
 
-        return redirect(RouteServiceProvider::HOME);
-    }
+           }
+       }
 }

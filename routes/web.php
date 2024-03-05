@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +18,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('/users',UserController::class);
+Route::resource('/categories',CategoryController::class);
+Route::resource('/events',EventController::class);
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -27,5 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

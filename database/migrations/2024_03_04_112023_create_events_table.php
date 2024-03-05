@@ -19,13 +19,17 @@ return new class extends Migration
             $table->string('description');
             $table->date('start_date');
             $table->string('location');
+            $table->date('end_date');
+            $table->double('price');
             $table->integer('status')->default(1);
             $table->integer('status_published')->default(1);
-            $table->integer('capacite');
+            $table->integer('available_seats');
             $table->integer('automatic_acceptance')->default(1);
             $table->softDeletes();
             $table->timestamps();
             $table->foreignId('category_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+
 
         });
     }
