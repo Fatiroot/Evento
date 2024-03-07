@@ -42,29 +42,38 @@
   ============================-->
   <header id="header" class="header-fixed">
     <div class="container">
+        <div id="logo" class="pull-left">
+            <!-- Uncomment below if you prefer to use a text logo -->
+            <!-- <h1><a href="#main">C<span>o</span>nf</a></h1>-->
+            <a href="index.html#intro" class="scrollto"><img src="img/logo.png" alt="" title=""></a>
+        </div>
 
-      <div id="logo" class="pull-left">
-        <!-- Uncomment below if you prefer to use a text logo -->
-        <!-- <h1><a href="#main">C<span>o</span>nf</a></h1>-->
-        <a href="index.html#intro" class="scrollto"><img src="img/logo.png" alt="" title=""></a>
-      </div>
-
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Home</a></li>
-          <li><a href="index.html#about">About</a></li>
-          <li><a href="index.html#speakers">Speakers</a></li>
-          <li><a href="index.html#schedule">Schedule</a></li>
-          <li><a href="index.html#venue">Venue</a></li>
-          <li><a href="index.html#hotels">Hotels</a></li>
-          <li><a href="index.html#gallery">Gallery</a></li>
-          <li><a href="index.html#sponsors">Sponsors</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-          <li class="buy-tickets"><a href="index.html#buy-tickets">Buy Tickets</a></li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="#intro">Home</a></li>
+                <li><a href="index.html#speakers">Events</a></li>
+                @auth
+                <li><a href="index.html#venue">Mes Reservation</a></li>
+                @endauth
+                <li><a href="index.html#hotels">Hotels</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="index.html#sponsors">Sponsors</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li>
+                    @auth
+                    <form method="POST" action="{{ route('logout') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        @csrf
+                        <button type="submit" class="nav-link text-white" style="background:none; border:none; cursor:pointer; padding:0; color:inherit; text-decoration:none;">Log out</button>
+                    </form>
+                </li>
+                @else
+                <li class="buy-tickets"><a href="{{ route('register') }}">Get Started</a></li>
+                @endauth
+            </ul>
+        </nav><!-- #nav-menu-container -->
     </div>
-  </header><!-- #header -->
+</header><!-- #header -->
+>
      @yield('content')
     <!--==========================
     Footer
