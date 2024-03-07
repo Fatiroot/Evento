@@ -1,7 +1,7 @@
-  
+
   @extends('layouts.master')
 @section('content')
-      
+
     <div class="relative mt-10 overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -31,15 +31,14 @@
             </thead>
             <tbody>
                @foreach ($users as $user )
-                   
-               
+
+
                 <tr>
                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                        {{ $user->id }}
                     </th>
                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-12 h-12 rounded-full dark:bg-gray-800" src="{{$user->getFirstMediaUrl('images')}}" alt="user photo">
-                    </th>
+                        <img src="{{$user->getFirstMediaUrl('images')}}" alt="" class="rounded-full h-12 w-12">
                     <td class="px-6 py-4 text-center">
                     {{ $user->name }}
                     </td>
@@ -66,7 +65,8 @@
                         </a>
                     </form>
                     </td>
-                    <td class="flex gap-5 px-6 py-4 justify-center">
+                    <td class="px-6 py-4 text-center">
+                    <div class="flex gap-5 px-6 py-4 justify-center">
                         <form action="{{route('users.destroy' ,$user->id)}}" method="post">
                             @csrf
                             @method('delete')
@@ -76,8 +76,8 @@
                                 </span>
                             </button>
                         </form>
+                    </div>
                     </td>
-                    
                 </tr>
             @endforeach
             </tbody>

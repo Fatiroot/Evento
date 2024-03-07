@@ -17,7 +17,7 @@ class EventController extends Controller
     {
         $events=Event::all();
         return view('admin.events.index',compact('events'));
-      
+
     }
 
     /**
@@ -29,7 +29,7 @@ class EventController extends Controller
     {
         $categories = Category::all();
         return view('organizer.events.create', compact('categories'));
-    
+
     }
 
     /**
@@ -43,8 +43,8 @@ class EventController extends Controller
         $events= Event::create($request->all());
         $events->addMediaFromRequest('image')->toMediaCollection('images');
         return redirect()->route('allevents')->with('success', 'Event created successfuly');
-    
-        
+
+
     }
 
     /**
@@ -57,7 +57,7 @@ class EventController extends Controller
     {
         $events=Event::all();
         return view('organizer.events.index',compact('events'));
-      
+
     }
 
     /**
@@ -68,10 +68,10 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        
+
         $categories = Category::all();
         return view('organizer.events.edit', compact(['categories','event']));
-    
+
     }
 
     /**
@@ -84,15 +84,15 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $event->update($request->except('image'));
-    
+
         if ($request->hasFile('image')) {
             $event->clearMediaCollection('images');
             $event->addMediaFromRequest('image')->toMediaCollection('images');
         }
-    
+
         return redirect()->route('allevents');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -101,14 +101,29 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect()->back()->with('success', 'Event deleted successfuly');
+
     }
     public function allevents()
     {
         $events=Event::all();
         return view('organizer.events.index',compact('events'));
-      
+
     }
+
+    public function eventshome()
+    {
+        $events=Event::all();
+        return view('home',compact('events'));
+
+    }
+    public function showevent($id){
+        $event = Event::with('category')->findOrFail($id);
+
+        return view('DetailEvent', compact('event'));
+    }
+
     public function updateStatusPublished(Request $request, Event $event)
 {
     $event->update(['status_published' => !$event->status_published]);

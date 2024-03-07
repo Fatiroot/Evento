@@ -15,8 +15,10 @@
 		</div>
 		<div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
 			<div class="max-w-md mx-auto">
+                <a href="index.html#intro" class="scrollto "><img src="img/logo.png" alt="" title=""></a>
+
 				<div>
-					<h1 class="text-2xl font-semibold">Create acounte</h1>
+					<h1 class="text-2xl mt-4 font-semibold">Create acounte</h1>
 				</div>
                 <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
     @csrf
@@ -53,6 +55,7 @@
                 </div>
                 <div class="relative">
                     <button class="bg-blue-500 text-white rounded-md px-2 py-1">Register</button>
+                    <a type="button" class="bg-blue-500 text-white rounded-md px-2 py-1" href="home">Return to Home</a>
                 </div>
             </div>
         </div>
@@ -63,10 +66,9 @@
 	</div>
 </div>
 
-    
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 
 </body>
 </html>
-    

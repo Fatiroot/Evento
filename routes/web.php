@@ -28,6 +28,12 @@ Route::put('events/{event}/update-status', [EventController::class,'updateStatus
 
 
 
+Route::get('/home',[EventController::class,'eventshome'])->name('eventshome');
+Route::get('/event/{id}', [EventController::class, 'showevent'])->name('event.show');
+
+
+
+
 
 
 
@@ -41,6 +47,7 @@ Route::put('events/{event}/update-status', [EventController::class,'updateStatus
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
