@@ -16,27 +16,27 @@
           <div class="col-md-6">
             <img src="{{ $event->getFirstMediaUrl('images') }}" alt="Speaker 1" class="img-fluid">
           </div>
-
           <div class="col-md-6">
             <div class="details">
               <h2>{{ $event->title }}</h2>
-              <div class="social">
-              </div>
               <p>{{ $event->description }}</p>
-
               <p>{{ $event->available_seats }}</p>
-
               <p>{{ $event->category->name }}</p>
               <p>{{ $event->location}}</p>
               <p>{{ $event->price}}</p>
               <p>{{ $event->start_date}}</p>
               <p>{{ $event->end_date}}</p>
-            </div>
+              <div class="text-center">
+                <form method="POST" action="{{ route('reservation', Auth::user()) }}">
+                    @csrf
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="event_id" value="{{ $event->id }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buy Now</button>
+                </form>
           </div>
-
         </div>
       </div>
-
     </section>
 
   </main>

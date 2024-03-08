@@ -107,17 +107,17 @@ class EventController extends Controller
     }
     public function allevents()
     {
-        $events=Event::all();
+        $events=Event::paginate(3);
         return view('organizer.events.index',compact('events'));
 
     }
 
     public function eventshome()
-    {
-        $events=Event::all();
-        return view('home',compact('events'));
+{
+    $events = Event::all();
+    return view('home', compact('events'));
+}
 
-    }
     public function showevent($id){
         $event = Event::with('category')->findOrFail($id);
 

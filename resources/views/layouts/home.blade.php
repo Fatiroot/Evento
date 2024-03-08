@@ -168,6 +168,7 @@
 
   <!-- Template Main Javascript File -->
   <script src="{{asset('js/main.js')}}"></script>
+  
 </body>
 
 </html>

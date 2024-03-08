@@ -27,7 +27,7 @@ class User extends Authenticatable implements HasMedia
         'status',
         'profile',
     ];
-   
+
 
 
     public function roles()
@@ -37,14 +37,14 @@ class User extends Authenticatable implements HasMedia
 
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'offer_users');
+        return $this->belongsToMany(Event::class, 'event_users');
     }
 
     public function organizerEvents()
     {
         return $this->hasMany(Event::class);
     }
-    
+
 
     /**
      * The attributes that should be hidden for serialization.

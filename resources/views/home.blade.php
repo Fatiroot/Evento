@@ -43,29 +43,30 @@
       Speakers Section
     ============================-->
     <section id="speakers" class="wow fadeInUp">
-      <div class="container">
-        <div class="section-header">
-          <h2>Event Speakers</h2>
-          <p>Here are some of our speakers</p>
-        </div>
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Events</h2>
+                <p>Here are some of our events</p>
+            </div>
 
-        <div class="row">
-            @foreach ($events as $event )
-            <div class="col-lg-4 col-md-6">
-                <div class="speaker">
-                    <img src="{{ $event->getFirstMediaUrl('images') }}" alt="Speaker 1" class="img-fluid">
-                    <div class="details">
-                        <h3><a href="{{ route('event.show', $event->id) }}">{{ $event->title }}</a></h3>
-                        <p>{{ $event->category->name}}</p>
-                        <div class="social ">
+            <div class="row">
+                @foreach ($events as $event)
+                <div class="col-lg-4 col-md-6">
+                    <div class="speaker">
+                        <img src="{{ $event->getFirstMediaUrl('images') }}" alt="Speaker 1" class="img-fluid">
+                        <div class="details">
+                            <h3><a href="{{ route('event.show', $event->id) }}">{{ $event->title }}</a></h3>
+                            <p>{{ $event->category->name }}</p>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
+             <div>
         </div>
-      </div>
+        </div>
     </section>
+
 
     <!--==========================
 

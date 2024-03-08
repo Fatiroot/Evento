@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onUpdate('cascade') ->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('status')->default(1);
-            $table->integer('number_place');
             $table->timestamps();
         });
     }

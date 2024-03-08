@@ -1,9 +1,12 @@
 <?php
 
 use App\Models\Event;
+use App\Models\EventUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventUserController;
+use App\Http\Controllers\TicketPdfController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 
@@ -30,6 +33,10 @@ Route::put('events/{event}/update-status', [EventController::class,'updateStatus
 
 Route::get('/home',[EventController::class,'eventshome'])->name('eventshome');
 Route::get('/event/{id}', [EventController::class, 'showevent'])->name('event.show');
+Route::post('reservation/{user}', [EventUserController::class, 'reservation'])->name('reservation');
+Route::get('generate-ticket/{event}', [TicketPdfController::class, 'generateTicket'])->name('ticket');
+
+
 
 
 

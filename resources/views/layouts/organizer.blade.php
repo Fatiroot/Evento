@@ -32,8 +32,7 @@
                         </svg>
                     </button>
                     <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-                    <img src="{Auth::user()->getFirstMediaUrl('images')}}" class="h-12 me-3 rounded-full" alt="FlowBite Logo" />
-                        <span class="self-center text-xl font-serif sm:text-2xl whitespace-nowrap	 dark:text-white">Evento</span>
+                    <img src="img/logo.png" class="h-12 me-3 rounded-full" alt="FlowBite Logo" />
                     </a>
                 </div>
                 <div class="flex items-center">
@@ -41,7 +40,7 @@
                         <div>
                             <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-10 h-10 rounded-full" src="#" alt="user photo">
+                                <img class="w-10 h-10 rounded-full" src="{{Auth::user()->getFirstMediaUrl('images')}}" alt="user photo">
                             </button>
                         </div>
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
@@ -126,11 +125,11 @@
             </ul>
         </div>
     </aside>
- 
+
     <div class="p-4 mt-4 sm:ml-64">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
 
-        
+
         @if(session('success'))
     <div class="alert alert-success text-white bg-success dark:bg-gray-800">
         {{ session('success') }}
@@ -145,10 +144,10 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-  
+
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
-    
+
 
     <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
 
