@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         $categories=Category::all();
         return view('admin.categories.index',compact('categories'));
-      
+
     }
 
     /**
@@ -41,7 +41,7 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->all());
         return redirect()->back()->with('success', 'Category created successfuly');
-        
+
     }
 
     /**
@@ -76,7 +76,7 @@ class CategoryController extends Controller
     public function update(CategoryStoreRequest $request, Category $category)
     {
         $category->update($request->all());
-        
+
         return redirect()->back()->with('success', 'Category updated successfuly');
     }
 
@@ -91,4 +91,6 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->back()->with('success', 'Category deleted successfuly');
     }
+
+
 }

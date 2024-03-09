@@ -15,7 +15,7 @@
 		</div>
 		<div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
 			<div class="max-w-md mx-auto">
-                <a href="index.html#intro" class="scrollto "><img src="img/logo.png" alt="" title=""></a>
+                <a href="/home" class="scrollto "><img src="img/logo.png" alt="" title=""></a>
 
 				<div>
 					<h1 class="text-2xl mt-4 font-semibold">Create acounte</h1>
