@@ -35,6 +35,7 @@ Route::get('/home',[EventController::class,'eventshome'])->name('eventshome');
 Route::get('/event/{id}', [EventController::class, 'showevent'])->name('event.show');
 Route::post('reservation/{user}', [EventUserController::class, 'reservation'])->name('reservation');
 Route::get('generate-ticket/{event}', [TicketPdfController::class, 'generateTicket'])->name('ticket');
+Route::get('/search', [EventController::class, 'search'])->name('events.search');
 
 
 

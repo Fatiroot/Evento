@@ -114,8 +114,9 @@ class EventController extends Controller
 
     public function eventshome()
 {
+    $categories=Category::all();
     $events = Event::all();
-    return view('home', compact('events'));
+    return view('home', compact(['events','categories']));
 }
 
     public function showevent($id){
@@ -140,6 +141,18 @@ public function updateStatus(Request $request, Event $event)
 {
     $event->update(['status' => !$event->status]);
     return redirect()->route('events.index');
+}
+public function search(Request $request) {
+    $keyword = $request->query('keyword');
+    $categories = Category::all();
+
+    $events = Event::where('title', 'like', '%' . $keyword . '%')
+        ->orWhere('description', 'like', '%' . $keyword . '%')
+        ->orWhereHas('category', function ($query) use ($keyword) {
+            $query->where('name', 'like', '%' . $keyword . '%');
+        })
+        ->get();
+    return view('/home', compact('events', 'keyword' , 'categories'));
 }
 
 }

@@ -14,10 +14,6 @@ class EventUserController extends Controller
             'reservation_date',
         ]);
 
-        $existingReservation = $user->events()->where('event_id', $request->event_id)->exists();
-        if ($existingReservation) {
-            return redirect()->back()->with('error', 'You have already reserved this event.');
-        }
         $event = Event::findOrFail($request->event_id);
         if ($event->available_seats<= 0) {
             return redirect()->back()->with('error', 'No available seats for this event.');
