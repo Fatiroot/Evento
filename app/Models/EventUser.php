@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class EventUser extends Pivot
+class EventUser extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
     protected $fillable = [
         'reservation_date',
         'status',

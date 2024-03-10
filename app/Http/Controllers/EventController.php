@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Event;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -53,11 +54,11 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show()
     {
-        $events=Event::all();
-        return view('organizer.events.index',compact('events'));
-
+        $user = Auth::user();
+        $events = Event::where('user_id', $user->id)->get();
+        return view('organizer.events.index', compact('events'));
     }
 
     /**
@@ -115,7 +116,7 @@ class EventController extends Controller
     public function eventshome()
 {
     $categories=Category::all();
-    $events = Event::all();
+    $events = Event::paginate(3);
     return view('home', compact(['events','categories']));
 }
 

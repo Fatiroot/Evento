@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
+use PHPUnit\Framework\Constraint\Count;
 
 class CategoryController extends Controller
 {
@@ -92,5 +93,5 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category deleted successfuly');
     }
 
-
+  
 }

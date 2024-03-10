@@ -40,10 +40,6 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Event::class, 'event_users');
     }
 
-    public function organizerEvents()
-    {
-        return $this->hasMany(Event::class);
-    }
 
 
     /**

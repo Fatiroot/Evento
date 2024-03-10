@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\CategoryController;
 */
 
 Route::resource('/users',UserController::class);
+Route::get('/dashboard',[UserController::class,'adminStatistic'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::resource('/categories',CategoryController::class);
 Route::resource('/events',EventController::class);
 Route::get('/eventsorganizater',[EventController::class,'allevents'])->name('allevents');
@@ -33,7 +34,9 @@ Route::put('events/{event}/update-status', [EventController::class,'updateStatus
 
 Route::get('/home',[EventController::class,'eventshome'])->name('eventshome');
 Route::get('/event/{id}', [EventController::class, 'showevent'])->name('event.show');
+Route::resource('reservations', EventUserController::class);
 Route::post('reservation/{user}', [EventUserController::class, 'reservation'])->name('reservation');
+Route::get('/dashboardorganizer',[EventUserController::class,'organizerStatistic'])->middleware(['auth', 'verified'])->name('dashboardorganizer');
 Route::get('generate-ticket/{event}', [TicketPdfController::class, 'generateTicket'])->name('ticket');
 Route::get('/search', [EventController::class, 'search'])->name('events.search');
 
@@ -57,13 +60,13 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('admin.dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboardorganizer', function () {
-    return view('organizer.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboardorganizer');
+// Route::get('/dashboardorganizer', function () {
+//     return view('organizer.dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboardorganizer');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -33,11 +33,11 @@ class Event extends Model implements HasMedia
 
      public function users()
      {
-         return $this->belongsToMany(User::class, 'offer_users');
+         return $this->belongsToMany(User::class, 'event_users');
      }
      public function category(){
         return $this->belongsTo(Category::class);
      }
 
-   
+
 }

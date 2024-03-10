@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Event;
 
 class UserController extends Controller
 {
@@ -17,7 +19,7 @@ class UserController extends Controller
     {
         $users=User::all();
         return view('admin.users.index',compact('users'));
-      
+
     }
 
     /**
@@ -49,7 +51,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+
     }
 
     /**
@@ -82,7 +84,7 @@ class UserController extends Controller
         }
         return redirect()->back()->with('success', ' Status changes successfuly');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -95,6 +97,14 @@ class UserController extends Controller
        $user->delete();
        return redirect()->back()->with('success', 'User deleted successfuly');
 
+    }
+
+
+    public function adminStatistic(){
+        $eventcount = Event::count();
+        $userCount = User::count();
+        $categoryCount =Category::count();
+        return view('admin.dashboard',compact('eventcount','userCount','categoryCount'));
     }
 }
 
