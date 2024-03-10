@@ -1,7 +1,7 @@
-  
+
   @extends('layouts.master')
 @section('content')
-      
+
     <div class="relative mt-10 overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -64,11 +64,11 @@
                     </td>
                     <td class="px-6 py-4 text-center">
                        {{$event->location}}
-                          
+
                     </td>
                     <td class="px-6 py-4 text-center">
                        {{$event->category->name}}
-                          
+
                     </td>
                     <td class="px-6 py-4 text-center">
                     {{ $event->available_seats }}
@@ -85,15 +85,15 @@
                         </button>
                     </td>
                     </td>
-                    <form id="update-status-form" method="POST" action="{{ route('events.updateStatus', $event->id) }}" style="display: none;">
+                    <form id="update-status-form-{{ $event->id }}" method="POST" action="{{ route('events.updateStatus', $event->id) }}" style="display: none;">
                         @csrf
                         @method('put')
                     </form>
 
                     <td class="px-6 py-4 text-center">
-                        <button class="hover:text-blue-500" onclick="event.preventDefault(); document.getElementById('update-status-form').submit();">
+                        <button class="hover:text-blue-500" onclick="event.preventDefault(); document.getElementById('update-status-form-{{ $event->id }}').submit();">
                             <span class="text-gray-900 whitespace-no-wrap">
-                                @if($event->status == 1)
+                                @if($event->status == 0)
                                 <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-indigo-300">Accepted</span>
                                 @else
                                 <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-indigo-300">Refused</span>
@@ -104,6 +104,6 @@
                 </tr>
             @endforeach
             </tbody>
-        </table>  
+        </table>
     </div>
     @endsection

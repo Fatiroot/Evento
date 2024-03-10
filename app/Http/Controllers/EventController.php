@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventStoreRequest;
 use App\Models\Event;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EventStoreRequest $request)
     {
         $events= Event::create($request->all());
         $events->addMediaFromRequest('image')->toMediaCollection('images');
@@ -108,7 +109,7 @@ class EventController extends Controller
     }
     public function allevents()
     {
-        $events=Event::paginate(3);
+        $events=Event::all();
         return view('organizer.events.index',compact('events'));
 
     }
@@ -116,7 +117,7 @@ class EventController extends Controller
     public function eventshome()
 {
     $categories=Category::all();
-    $events = Event::paginate(3);
+    $events = Event::where('status_published',1)->where('status',0)->where('start_date', '>', now())->where('end_date', '>', now())->paginate(3);
     return view('home', compact(['events','categories']));
 }
 
@@ -138,11 +139,15 @@ public function updateAutomaticAcceptance(Request $request, Event $event)
     $event->update(['automatic_acceptance' => !$event->automatic_acceptance]);
     return redirect()->route('allevents');
 }
+
+
 public function updateStatus(Request $request, Event $event)
 {
     $event->update(['status' => !$event->status]);
     return redirect()->route('events.index');
 }
+
+
 public function search(Request $request) {
     $keyword = $request->query('keyword');
     $categories = Category::all();
@@ -152,7 +157,7 @@ public function search(Request $request) {
         ->orWhereHas('category', function ($query) use ($keyword) {
             $query->where('name', 'like', '%' . $keyword . '%');
         })
-        ->get();
+        ->paginate(3);
     return view('/home', compact('events', 'keyword' , 'categories'));
 }
 

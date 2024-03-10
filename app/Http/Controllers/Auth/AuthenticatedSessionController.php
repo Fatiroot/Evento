@@ -27,10 +27,27 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        if(Auth::check()) {
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+            $request->session()->regenerate();
+
+            if (Auth::user()->status == 1) {
+                if (Auth::user()->roles->contains('id', 1)) {
+                    return redirect()->route('dashboard');
+                } else if (Auth::user()->roles->contains('id', 3)) {
+                    return redirect()->route('dashboardorganizer');
+                } else {
+                    return redirect('/home');
+                }
+            } else {
+                    Auth::logout(); // Log out the user
+                    return redirect()->route('login')->withErrors(['status' => 'Your account is inactive.']);
+             }
+
+        }
+
     }
+
 
     /**
      * Destroy an authenticated session.

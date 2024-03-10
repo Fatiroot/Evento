@@ -66,12 +66,9 @@
                     </div>
                 </div>
                 @endforeach
-                {{-- {{ $events->links() }} --}}
-
             </div>
-             <div>
         </div>
-        </div>
+        {{ $events->links() }}
     </section>
 
 

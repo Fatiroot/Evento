@@ -51,10 +51,10 @@
                         @endforeach
                     </td>
                     <td class="px-6 py-4 text-center">
-                    <form method="POST" action="{{ route('users.update', $user->id) }}" id="update-user-form">
+                    <form method="POST" action="{{ route('users.update', $user->id) }}" id="update-user-form-{{ $user->id }}">
                         @csrf
                         @method('PUT')
-                        <a href="#" class="hover:text-blue-500" onclick="event.preventDefault(); document.getElementById('update-user-form').submit();">
+                        <a href="#" class="hover:text-blue-500" onclick="event.preventDefault(); document.getElementById('update-user-form-{{ $user->id }}').submit();">
                             <p class="text-gray-900 whitespace-no-wrap">
                                 @if($user->status == 1)
                                 <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-indigo-300">Accepted</span>

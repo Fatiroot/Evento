@@ -19,14 +19,23 @@
               <label class="leading-loose">Event Profile</label>
               <input type="file" name="image" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Event title">
             </div>
+            @error('image')
+            <span class="text-red-400">{{$message}}</span>
+            @enderror
             <div class="flex flex-col">
               <label class="leading-loose">Event Title</label>
               <input type="text" name="title" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Event title">
             </div>
+            @error('title')
+            <span class="text-red-400">{{$message}}</span>
+            @enderror
             <div class="flex flex-col">
               <label class="leading-loose">Event Location</label>
               <input type="text" name="location" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Event title">
             </div>
+            @error('location')
+            <span class="text-red-400">{{$message}}</span>
+            @enderror
             <div class="flex flex-col">
               <input type="hidden" name="user_id" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" value="{{Auth::user()->id}}">
             </div>
@@ -37,22 +46,26 @@
                 @foreach ($categories as $category)
                 <option value="{{ $category->id }}">{{$category->name}}</option>
             @endforeach
-            </select>            </div>
+            </select>
+        </div>
             <div class="flex items-center space-x-4">
               <div class="flex flex-col">
                 <label class="leading-loose">Start</label>
                 <div class="relative focus-within:text-gray-600 text-gray-400">
                   <input type="date" name="start_date" class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="25/02/2020">
-                  <div class="absolute left-3 top-2">
-                  </div>
+                  @error('start_date')
+                  <span class="text-red-400">{{$message}}</span>
+                  @enderror
+
                 </div>
               </div>
               <div class="flex flex-col">
                 <label class="leading-loose">End</label>
                 <div class="relative focus-within:text-gray-600 text-gray-400">
                   <input type="date" name="end_date" class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="26/02/2020">
-                  <div class="absolute left-3 top-2">
-                  </div>
+                    @error('end_date')
+                  <span class="text-red-400">{{$message}}</span>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -61,16 +74,18 @@
                 <label class="leading-loose">Price</label>
                 <div class="relative focus-within:text-gray-600 text-gray-400">
                   <input type="number" name="price" class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600">
-                  <div class="absolute left-3 top-2">
-                  </div>
+                  @error('price')
+                  <span class="text-red-400">{{$message}}</span>
+                  @enderror
                 </div>
               </div>
               <div class="flex flex-col">
                 <label class="leading-loose">Available seats</label>
                 <div class="relative focus-within:text-gray-600 text-gray-400">
                   <input type="number" name="available_seats" class="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600">
-                  <div class="absolute left-3 top-2">
-                  </div>
+                  @error('available_seats')
+                  <span class="text-red-400">{{$message}}</span>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -78,6 +93,9 @@
               <label class="leading-loose">Event Description</label>
               <input type="text"  name="description" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Optional">
             </div>
+            @error('description')
+            <span class="text-red-400">{{$message}}</span>
+            @enderror
           </div>
           <div class="pt-4 flex items-center space-x-4">
           <a href="{{ route('allevents') }}" class="block text-gray-900 px-4 py-3 rounded-md focus:outline-none flex justify-center items-center w-full">

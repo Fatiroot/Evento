@@ -26,14 +26,14 @@ class EventStoreRequest extends FormRequest
         return [
                 'title' => 'required|string|max:255',
                 'description' => 'required|string|max:1000',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date|after_or_equal:start_date',
+                'start_date' => 'required|date|after:today',
+                'end_date' => 'required|date|after:today',
                 'location' => 'required|string|max:255',
                 'available_seats' => 'required|integer|min:1',
                 'price' => 'required|numeric|min:0',
                 'category_id' => 'required|exists:categories,id',
                 'image' => 'required',
-            
+
         ];
     }
 }
