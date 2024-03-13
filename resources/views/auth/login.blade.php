@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    <title>Register</title>
+    <title>log in</title>
 </head>
 <body>
 <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -30,6 +30,7 @@
                             <div  class="relative">
                                 <input autocomplete="off" id="password" name="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" placeholder="Password" />
                                 <label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
+
                             </div>
                             <div style="display: flex; justify-content: center;">
                                 <button class="bg-blue-500 text-white rounded-md px-2 py-1">Log In</button>
@@ -55,6 +56,7 @@
                           </div>
                     </div>
                 </form>
+            </div>
 		</div>
 	</div>
 </div>

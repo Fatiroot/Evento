@@ -36,11 +36,57 @@
                     <h2>End date</h2>
                     <p>{{ $event->end_date}}</p>
                     <div class="text-center">
-                        <form method="POST" action="{{ route('reservation', Auth::user()) }}">
+                        <form id="reservationForm" method="POST" action="{{ route('reservation') }}">
                             @csrf
                             <input type="hidden" class="form-control" name="event_id" value="{{ $event->id }}">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Buy Now</button>
+                            <input type="hidden" class="form-control" name="user_id" value="{{ Auth::check() ? Auth::user()->id : '' }}">
+                            @auth
+                                @if ($event->available_seats != 0)
+                                    <button id="submitButton" type="submit" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Buy Now</button>
+                                @else
+                                    <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                                        <dd class="text-red-500 font-bold text-lg sm:col-span-2">
+                                            Event sold out
+                                        </dd>
+                                    </div>
+                                @endif
+                            @else
+                                <div class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                                    <dd class="text-red-500 font-bold text-lg sm:col-span-2">
+                                        Login to reserve your place in this event
+                                    </dd>
+                                </div>
+                            @endauth
+
+                            @if (session('success'))
+                                <div class="alert alert-success mt-3" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if (session('error'))
+                                <div class="alert alert-danger mt-3" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+                                @auth
+                                    @if (Auth::user()->events->contains('id', $event->id) && Auth::user()->events->where('id', $event->id)->first()->pivot->status == 1)
+                                        <a id="downloadButton" href="{{ route('ticket', $event) }}" class="btn btn-success">Download Ticket</a>
+                                    @endif
+                                @endauth
                         </form>
+                        <script>
+                            document.getElementById('downloadButton').addEventListener('click', function() {
+                                this.style.display = 'none';
+                            });
+
+                            document.getElementById('submitButton').addEventListener('click', function() {
+                                this.disabled = true;
+                            });
+                        </script>
+
+
+
                     </div>
                 </div>
             </div>

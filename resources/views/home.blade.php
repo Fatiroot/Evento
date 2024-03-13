@@ -48,26 +48,38 @@
             <div class="section-header">
                 <form action="{{ route('events.search') }}" method="GET" class="search-form">
                     @csrf
-                    <input type="search" name="keyword" placeholder="Search..." class="search-input">
+                    <select id="categories" name="category_keyword" class="form-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-start-0 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option disabled selected>Pick your category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    <input type="search" name="event_keyword" placeholder="Search..." class="search-input">
                     <button type="submit" class="search-button">Search</button>
                 </form>
+
                 <h2>Our Events</h2>
                 <p>Here are some of our events</p>
             </div>
             <div class="row">
-                @foreach ($events as $event)
+                @forelse ($events as $event )
                 <div class="col-lg-4 col-md-6">
                     <div class="speaker">
-                        <img src="{{ $event->getFirstMediaUrl('images') }}" alt="Speaker 1" class="img-fluid">
+                        <img src="{{ $event->getFirstMediaUrl('images') }}" alt="Speaker 1" class="img-fluid"  style="height: 600px; width: 600px;">
                         <div class="details">
                             <h3><a href="{{ route('event.show', $event->id) }}">{{ $event->title }}</a></h3>
                             <p>{{ $event->category->name }}</p>
                         </div>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class='mx-auto'>
+                     <h3> no events </h3>
+                </div>
+                @endforelse
             </div>
         </div>
+
         {{ $events->links() }}
     </section>
 

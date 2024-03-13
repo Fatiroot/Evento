@@ -40,8 +40,8 @@ class AuthenticatedSessionController extends Controller
                     return redirect('/home');
                 }
             } else {
-                    Auth::logout(); // Log out the user
-                    return redirect()->route('login')->withErrors(['status' => 'Your account is inactive.']);
+                    Auth::logout();
+                    return redirect()->route('login')->withErrors(['error' => 'Your account is inactive.']);
              }
 
         }
@@ -60,6 +60,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/home');
     }
 }

@@ -19,22 +19,20 @@ class EventUserController extends Controller
     return view('organizer.reservation.index', compact('reservations'));
 }
 
-public function reservation(Request $request, User $user){
+public function reservation(Request $request){
     $validated = $request->validate([
         'event_id' => 'required|exists:events,id',
-        'reservation_date', // This field is validated, but no specific validation rule is provided. Consider adding a rule.
+        'reservation_date',
     ]);
-
+    $user=User::findOrfail($request->user_id);
     $event = Event::findOrFail($request->event_id);
     if ($event->available_seats <= 0) {
-        return redirect()->back()->with('error', 'No available seats for this event.');
+        return redirect()->back();
     }
 
-    // Decrement available seats
     $event->available_seats--;
     $event->save();
 
-    // If automatic acceptance is enabled, directly attach the reservation
     if ($event->automatic_acceptance == 1) {
         $user->events()->attach([$request->event_id => [
             'reservation_date' => now(),
@@ -46,7 +44,6 @@ public function reservation(Request $request, User $user){
             'reservation_date' => now(),
             'status' => 0
         ]]);
-        // If manual approval is required, redirect to the event show page
         return redirect()->route('event.show', $event->id)->with('success', 'Reservation request sent. It will be confirmed once approved.');
     }
 }
@@ -54,10 +51,19 @@ public function reservation(Request $request, User $user){
 
 
     public function organizerStatistic(){
-        $eventcount = Event::count();
-        $reservationCount =EventUser::count();
-        return view('organizer.dashboard',compact('eventcount','reservationCount'));
+        $userId = Auth::user()->id;
+        $eventcount = Event::where('user_id', $userId)->count();
+        $reservationCount = EventUser::whereHas('event', function($query) use($userId){
+            $query->where('user_id',$userId);
+        })->count();        return view('organizer.dashboard',compact('eventcount','reservationCount'));
     }
+
+    public function updateStatus(Request $request, EventUser $eventuser)
+{
+    $eventuser->update(['status' => !$eventuser->status]);
+//  dd($data);
+return redirect()->back()->with('success', 'Reservation approved successfully.');
+}
 
 
 }

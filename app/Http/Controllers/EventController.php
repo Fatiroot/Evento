@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventStoreRequest;
+use App\Http\Requests\EventUpdateRequest;
 use App\Models\Event;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -17,8 +18,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events=Event::all();
-        return view('admin.events.index',compact('events'));
+        $user = Auth::user();
+        $events = Event::where('user_id', $user->id)->get();
+        return view('organizer.events.index', compact('events'));
 
     }
 
@@ -44,7 +46,7 @@ class EventController extends Controller
     {
         $events= Event::create($request->all());
         $events->addMediaFromRequest('image')->toMediaCollection('images');
-        return redirect()->route('allevents')->with('success', 'Event created successfuly');
+        return redirect()->route('events.index')->with('success', 'Event created successfuly');
 
 
     }
@@ -57,9 +59,7 @@ class EventController extends Controller
      */
     public function show()
     {
-        $user = Auth::user();
-        $events = Event::where('user_id', $user->id)->get();
-        return view('organizer.events.index', compact('events'));
+
     }
 
     /**
@@ -83,7 +83,7 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(EventUpdateRequest $request, Event $event)
     {
         $event->update($request->except('image'));
 
@@ -92,7 +92,7 @@ class EventController extends Controller
             $event->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
-        return redirect()->route('allevents');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -110,7 +110,7 @@ class EventController extends Controller
     public function allevents()
     {
         $events=Event::all();
-        return view('organizer.events.index',compact('events'));
+        return view('admin.events.index',compact('events'));
 
     }
 
@@ -127,38 +127,54 @@ class EventController extends Controller
         return view('DetailEvent', compact('event'));
     }
 
+
+
     public function updateStatusPublished(Request $request, Event $event)
 {
     $event->update(['status_published' => !$event->status_published]);
 
-    return redirect()->route('allevents');
+    return redirect()->route('events.index');
 }
+
+
 
 public function updateAutomaticAcceptance(Request $request, Event $event)
 {
     $event->update(['automatic_acceptance' => !$event->automatic_acceptance]);
-    return redirect()->route('allevents');
+    return redirect()->route('events.index');
 }
 
 
 public function updateStatus(Request $request, Event $event)
 {
     $event->update(['status' => !$event->status]);
-    return redirect()->route('events.index');
+    return redirect()->route('allevents');
 }
 
 
 public function search(Request $request) {
-    $keyword = $request->query('keyword');
+    $categoryKeyword = $request->query('category_keyword');
+    $eventKeyword = $request->query('event_keyword');
     $categories = Category::all();
 
-    $events = Event::where('title', 'like', '%' . $keyword . '%')
-        ->orWhere('description', 'like', '%' . $keyword . '%')
-        ->orWhereHas('category', function ($query) use ($keyword) {
-            $query->where('name', 'like', '%' . $keyword . '%');
-        })
-        ->paginate(3);
-    return view('/home', compact('events', 'keyword' , 'categories'));
+    $eventsQuery = Event::query();
+
+    if ($eventKeyword) {
+        $eventsQuery->where(function ($query) use ($eventKeyword) {
+            $query->where('title', 'like', '%' . $eventKeyword . '%')
+                  ->orWhere('description', 'like', '%' . $eventKeyword . '%');
+        });
+    }
+
+    if ($categoryKeyword) {
+        $eventsQuery->orWhereHas('category', function ($query) use ($categoryKeyword) {
+            $query->where('name', 'like', '%' . $categoryKeyword . '%');
+        });
+    }
+
+    $events = $eventsQuery->paginate(3);
+
+    return view('home', compact('events', 'eventKeyword', 'categoryKeyword', 'categories'));
 }
 
 }

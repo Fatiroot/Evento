@@ -20,7 +20,7 @@
 				<div>
 					<h1 class="text-2xl mt-4 font-semibold">Create acounte</h1>
 				</div>
-                <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                <form id="registrationForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
     @csrf
     <div class="divide-y divide-gray-200">
         <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
@@ -56,6 +56,8 @@
                 <div class="relative">
                     <button class="bg-blue-500 text-white rounded-md px-2 py-1">Register</button>
                     <a type="button" class="bg-blue-500 text-white rounded-md px-2 py-1" href="home">Return to Home</a>
+                    <a type="button" class="bg-blue-500 text-white rounded-md px-2 py-1" href="login">Return to login</a>
+
                 </div>
             </div>
         </div>
@@ -69,6 +71,72 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('registrationForm');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (validateForm()) {
+                form.submit();
+            }
+        });
+
+        function validateForm() {
+            var isValid = true;
+
+            var nameInput = document.getElementById('name');
+            var emailInput = document.getElementById('email');
+            var passwordInput = document.getElementById('password');
+            var confirmPasswordInput = document.getElementById('password_confirmation');
+
+            // Validate Name
+            if (nameInput.value.trim() === '') {
+                isValid = false;
+                alert('Please enter your name.');
+                nameInput.classList.add('border', 'border-red-500');
+            } else {
+                nameInput.classList.remove('border', 'border-red-500');
+            }
+
+            // Validate Email
+            if (emailInput.value.trim() === '') {
+                isValid = false;
+                alert('Please enter your email.');
+                emailInput.classList.add('border', 'border-red-500');
+            } else {
+                emailInput.classList.remove('border', 'border-red-500');
+            }
+
+            // Validate Password
+            if (passwordInput.value.trim() === '') {
+                isValid = false;
+                alert('Please enter your password.');
+                passwordInput.classList.add('border', 'border-red-500');
+            } else {
+                passwordInput.classList.remove('border', 'border-red-500');
+            }
+
+            // Validate Confirm Password
+            if (confirmPasswordInput.value.trim() === '') {
+                isValid = false;
+                alert('Please confirm your password.');
+                confirmPasswordInput.classList.add('border', 'border-red-500');
+            } else if (passwordInput.value !== confirmPasswordInput.value) {
+                isValid = false;
+                alert('Passwords do not match.');
+                passwordInput.classList.add('border', 'border-red-500');
+                confirmPasswordInput.classList.add('border', 'border-red-500');
+            } else {
+                passwordInput.classList.remove('border', 'border-red-500');
+                confirmPasswordInput.classList.remove('border', 'border-red-500');
+            }
+
+            return isValid;
+        }
+    });
+</script>
 
 </body>
 </html>

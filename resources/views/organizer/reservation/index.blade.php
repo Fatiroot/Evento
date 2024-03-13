@@ -41,21 +41,23 @@
                 <td class="px-6 py-4 text-center">
                 {{ $reservation->reservation_date }}
                 </td>
+                <form id="update-status-form-{{ $reservation->id }}" method="POST" action="{{ route('eventuser.updateStatus', $reservation->id) }}" style="display: none;">
+                    @csrf
+                    @method('put')
+                </form>
+
                 <td class="px-6 py-4 text-center">
-                {{ $reservation->available_seats }}
+                    <button class="hover:text-blue-500" onclick="event.preventDefault(); document.getElementById('update-status-form-{{ $reservation->id }}').submit();">
+                        <span class="text-gray-900 whitespace-no-wrap">
+                            @if($reservation->status == 1)
+                            <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-indigo-300">Accepted</span>
+                            @else
+                            <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-indigo-300">Refused</span>
+                            @endif
+                        </span>
+                    </button>
                 </td>
-                <td class="px-6 py-4 text-center">
-                <button class="hover:text-blue-500" onclick="reservation.prreservationDefault(); document.getElementById('update-reservation-form').submit();">
-                    <span class="text-gray-900 whitespace-no-wrap">
-                        @if($reservation->status == 1)
-                        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-indigo-300">Accepted</span>
-                        @else
-                        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-indigo-300">Refused</span>
-                        @endif
-                    </span>
-                </button>
-                </td>
-              
+
 
 
         @endforeach
